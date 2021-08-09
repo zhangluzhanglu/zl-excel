@@ -1,5 +1,6 @@
 # zl-excel
-   在进行node开发时，快速生成excel表格
+
+  作用：在进行node开发时，快速生成excel表格。
 
 ## 1. 起因
 

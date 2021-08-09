@@ -16,7 +16,7 @@
  
        1. 安装： npm i  zl-excel -S
 
-       2. 引入： const Excel = require("zl-excel")
+       2. 引入： const ExcelMod = require("zl-excel")
    ```
 
 ## 3. 使用示例（目前主要是在egg.js中使用）

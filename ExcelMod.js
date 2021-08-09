@@ -41,17 +41,13 @@ class ExcelMod {
     static async getWorkbook(paramsObj) {
         const { excelPath, excelData, frameInfo, returnCall = false } = paramsObj;
         let workbook;
-        // 传了表格路径，但是没有传入框架信息，则表示 表格将生成在本地硬盘
-        if (excelPath && !frameInfo) {
+        // 传了表格路径，则表示 表格将生成在本地硬盘
+        if (excelPath) {
             workbook = new Excel.stream.xlsx.WorkbookWriter({
                 filename: excelPath,
             });
         }
-        // 每传表格路径，但是传入了框架信息，则表示 表格将通过路由返回到前端页面
-        if (!excelPath && frameInfo) {
-            workbook = new Excel.Workbook();
-        }
-        // 其他情况默认构建new Excel.Workbook();，如只传了表格数据的情况
+        // 其他表示通过路由返回到前端
         else {
             workbook = new Excel.Workbook();
         }
@@ -111,8 +107,8 @@ class ExcelMod {
             });
         }
         // ==================表格生成完毕，开始处理==================
-        // 没有传入框架信息，但是传了表格路径，则表示 表格将生成在本地硬盘
-        if (excelPath && !frameInfo) {
+        // 如果传了表格路径，则表示 表格将生成在本地硬盘
+        if (excelPath) {
             // 直接生成表格，不返回到调用处
             if (!returnCall) {
                 workbook.commit();
@@ -123,12 +119,8 @@ class ExcelMod {
                 return workbook;
             }
         }
-        // 如果路径和框架信息都没传，只传入了表格数据，那么就必然是直接返回Excel对象到调用处
-        if (!excelPath && !frameInfo) {
-            return workbook;
-        }
-        // 如果只传了数据和框架信息，那么必然是直接将表格通过路由响应到前端
-        else if (!excelPath && frameInfo) {
+        // 如果传了框架信息，那么必然是直接将表格通过路由响应到前端
+        else if (frameInfo) {
             // egg.js框架
             if (frameInfo.name == 'egg.js') {
                 const { other, filename } = frameInfo;
@@ -146,6 +138,10 @@ class ExcelMod {
             else {
                 console.log('暂不支持出egg.js之外的其他框架自动构建导出');
             }
+        }
+        // 如果没传路径，且没传框架信息 ，那么就返回Excel对象到调用处
+        else {
+            return workbook;
         }
     }
 }

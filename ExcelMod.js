@@ -15,7 +15,7 @@ class ExcelMod {
       * @param paramsObj.frameInfo.other {Object} 此框架需要的其他信息对象集合
       * @param paramsObj.returnCall {Boolean} 将表格对象返回到调用处,默认为false即不返回
       * @return workbook表格对象
-      * @author 张路 2021/08/09
+      * @author zl-fire 2021/08/09
       * @example
       * {
       *    // 表格数据信息【必填】

@@ -52,7 +52,7 @@ class ExcelMod {
             workbook = new Excel.Workbook();
         }
         // 具体的表格信息
-        workbook.creator = 'zl-table';
+        workbook.creator = 'zl-excel';
         workbook.created = new Date(Date.now());
         workbook.modified = new Date(Date.now());
         // 传入多个sheet对象构成的数组
@@ -67,7 +67,7 @@ class ExcelMod {
         // 配置默认的表格相关样式
         const defaultStyle = {
             alignment: {
-                vertical: 'center',
+                vertical: 'middle',
                 horizontal: 'center',
             },
         };
@@ -76,8 +76,9 @@ class ExcelMod {
             const obj = options[i];
             const { sheetName = '', columns = [], rows = [] } = obj;
             const sheet = workbook.addWorksheet(sheetName);
+            // 设置列的样式
             sheet.columns = columns.map(item => {
-                const style = item.style ? Object.assign(item.style, defaultStyle) : defaultStyle;
+                const style = item.style ? Object.assign(defaultStyle, item.style) : defaultStyle;
                 return {
                     ...item,
                     style,

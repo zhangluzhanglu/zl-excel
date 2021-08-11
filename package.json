@@ -1,6 +1,6 @@
 {
   "name": "zl-excel",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "",
   "main": "ExcelMod.js",
   "scripts": {
@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zhangluzhanglu/zl-excel.git"
+    "url": "git+https://github.com/zl-fire/zl-excel.git"
   },
   "keywords": [],
   "author": "张路",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/zhangluzhanglu/zl-excel/issues"
+    "url": "https://github.com/zl-fire/zl-excel/issues"
   },
-  "homepage": "https://github.com/zhangluzhanglu/zl-excel#readme",
+  "homepage": "https://github.com/zl-fire/zl-excel#readme",
   "dependencies": {
     "exceljs": "^4.2.1"
   }

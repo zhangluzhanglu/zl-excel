@@ -74,6 +74,19 @@ class ExcelMod {
       const obj = options[i];
       const { sheetName = '', columns = [], rows = [] } = obj;
       const sheet = workbook.addWorksheet(sheetName);
+
+    /*
+      处理表头，得到真正的表头
+
+      逻辑：
+      1. 表头数组有几个数组元素就表示表头占据几行，每个数组元素表示一行
+      2. colspan: 3 表示此单元格跨几列
+      3. rowspan: 2 表示此单元格跨几行
+
+      */
+
+
+
       // 设置列的样式
       columns.forEach(item => {
         if (item.style == undefined) { item.style = {}; }

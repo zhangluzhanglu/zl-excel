@@ -3,41 +3,41 @@
 const Excel = require('exceljs');
 class ExcelMod {
     /**
-      * @function 生成表格对象的功能函数
-      * @description 接收表格相关信息，生成含有一个或者多个sheet的Excel表格
-      *
-      * @param paramsObj {Object} 完整的表格参数信息
-      * @param paramsObj.excelData {Object|Array} 生成的excel表格数据，为对象或者对象数组，传入对象表示只创建一个sheet,对象数组表示创建多个sheet
-      * @param paramsObj.excelPath {String} 生成的excel表格路径
-      * @param paramsObj.frameInfo {Object} 表示此表格将在何种框架中使用。如：{ name:"egg.js",filename:"测试表格",other:ctx}
-      * @param paramsObj.frameInfo.filename {String} 表示生成的ecel名字
-      * @param paramsObj.frameInfo.name {String} 表示此模块在哪个框架信息中使用
-      * @param paramsObj.frameInfo.other {Object} 此框架需要的其他信息对象集合
-      * @param paramsObj.returnCall {Boolean} 将表格对象返回到调用处,默认为false即不返回
-      * @return workbook表格对象
-      * @author zl-fire 2021/08/09
-      * @example
-      * {
-      *    // 表格数据信息【必填】
-      *    excelData:[
-      *     {
-      *       sheetName: '用户表', //第一个sheet的名字
-      *       columns: [
-      *        { header: '姓名', key: 'name', width: 15 },
-      *        { header: '性别', key: 'sex', width: 10 },
-      *        { header: '年龄', key: 'age', width: 20, default: 0 },
-      *        { header: '爱好', key: 'hobby', width: 15, default: 0 },
-      *       ],
-      *       rows: [
-      *        { name: "张三", sex: "男", age: 18, hobby: "小说、音乐"},
-      *        { name: "李四", sex: "女", age: 19, hobby: "小说、音乐、学习"}
-      *       ]
-      *     }
-      *   ],
-      *   //框架信息【可选】
-      *   frameInfo:{ name:"egg.js",filename:"测试表格",other:ctx},
-      * }
-    */
+        * @function 生成表格对象的功能函数
+        * @description 接收表格相关信息，生成含有一个或者多个sheet的Excel表格
+        *
+        * @param paramsObj {Object} 完整的表格参数信息
+        * @param paramsObj.excelData {Object|Array} 生成的excel表格数据，为对象或者对象数组，传入对象表示只创建一个sheet,对象数组表示创建多个sheet
+        * @param paramsObj.excelPath {String} 生成的excel表格路径
+        * @param paramsObj.frameInfo {Object} 表示此表格将在何种框架中使用。如：{ name:"egg.js",filename:"测试表格",other:ctx}
+        * @param paramsObj.frameInfo.filename {String} 表示生成的ecel名字
+        * @param paramsObj.frameInfo.name {String} 表示此模块在哪个框架信息中使用
+        * @param paramsObj.frameInfo.other {Object} 此框架需要的其他信息对象集合
+        * @param paramsObj.returnCall {Boolean} 将表格对象返回到调用处,默认为false即不返回
+        * @return workbook表格对象
+        * @author zl-fire 2021/08/09
+        * @example
+        * {
+        *    // 表格数据信息【必填】
+        *    excelData:[
+        *     {
+        *       sheetName: '用户表', //第一个sheet的名字
+        *       columns: [
+        *        { header: '姓名', key: 'name', width: 15 },
+        *        { header: '性别', key: 'sex', width: 10 },
+        *        { header: '年龄', key: 'age', width: 20, default: 0 },
+        *        { header: '爱好', key: 'hobby', width: 15, default: 0 },
+        *       ],
+        *       rows: [
+        *        { name: "张三", sex: "男", age: 18, hobby: "小说、音乐"},
+        *        { name: "李四", sex: "女", age: 19, hobby: "小说、音乐、学习"}
+        *       ]
+        *     }
+        *   ],
+        *   //框架信息【可选】
+        *   frameInfo:{ name:"egg.js",filename:"测试表格",other:ctx},
+        * }
+      */
     static async getWorkbook(paramsObj) {
         const { excelPath, excelData, frameInfo, returnCall = false } = paramsObj;
         let workbook;
@@ -96,7 +96,8 @@ class ExcelMod {
             // 添加具体的表体行数据
             rows.forEach((row, index) => {
                 for (const key in row) {
-                    if (row[key] == undefined) {
+                    // 当值为null,undefined,"",o 等值时,且用户又设置了默认值时，就取默认值
+                    if (!row[key] && defualtRowval[key] != undefined) {
                         row[key] = defualtRowval[key];
                     }
                 }

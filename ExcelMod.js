@@ -45,6 +45,7 @@ class ExcelMod {
     if (excelPath) {
       workbook = new Excel.stream.xlsx.WorkbookWriter({
         filename: excelPath,
+        useStyles: true,  //设置允许写入样式信息，默认为了节省性能时不允许的
       });
     }
     // 其他表示通过路由返回到前端
@@ -58,7 +59,7 @@ class ExcelMod {
     // 传入多个sheet对象构成的数组
     let options;
     if (Object.prototype.toString.call(excelData) == '[object Object]') {
-      options = [ excelData ]; // 表示传入的对象
+      options = [excelData]; // 表示传入的对象
     } else if (Array.isArray(excelData)) {
       options = excelData; // 表示传入的数组
     } else {
@@ -67,32 +68,30 @@ class ExcelMod {
     // 配置默认的表格相关样式
     const defaultStyle = {
       alignment: { wrapText: true, vertical: 'middle', horizontal: 'center' },
-      font: { bold: true },
+      // font: { bold: true },
     };
     // 循环创建表格里面的各个sheet
     for (let i = 0; i < options.length; i++) {
       const obj = options[i];
       const { sheetName = '', columns = [], rows = [] } = obj;
       const sheet = workbook.addWorksheet(sheetName);
-
-    /*
-      处理表头，得到真正的表头
-
-      逻辑：
-      1. 表头数组有几个数组元素就表示表头占据几行，每个数组元素表示一行
-      2. colspan: 3 表示此单元格跨几列
-      3. rowspan: 2 表示此单元格跨几行
-
-      */
-
-
-
       // 设置列的样式
       columns.forEach(item => {
-        if (item.style == undefined) { item.style = {}; }
-        item.style = { ...defaultStyle, ...item.style };// 合并用户样式和默认样式
+        item.style = item.style || defaultStyle;
       });
       sheet.columns = columns;
+
+      /*
+        处理表头，得到真正的表头
+        逻辑：
+        1. 表头数组有几个数组元素就表示表头占据几行，每个数组元素表示一行
+        2. colspan: 3 表示此单元格跨几列
+        3. rowspan: 2 表示此单元格跨几行
+  
+        */
+
+
+
       // 构建默认表头
       const defualtRowval = {};
       columns.forEach(col => {

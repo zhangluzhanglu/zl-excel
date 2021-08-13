@@ -139,7 +139,8 @@
 ## 5. getWorkbook参数详细说明
 
 ```js
- * @function 生成表格对象的功能函数getWorkbook
+  /**
+      * @function 生成表格对象的功能函数getWorkbook
       * @description 接收表格相关信息，生成含有一个或者多个sheet的Excel表格
       *
       * @param paramsObj {Object} 完整的表格参数信息

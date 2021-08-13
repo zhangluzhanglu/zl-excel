@@ -8,6 +8,7 @@ class ExcelMod {
       *
       * @param paramsObj {Object} 完整的表格参数信息
       * @param paramsObj.excelData {Object|Array} 生成的excel表格数据，为对象或者对象数组，传入对象表示只创建一个sheet,对象数组表示创建多个sheet
+      * @param paramsObj.cellDefaultStyle {Object} 每个单元格的默认样式（如果构建表头数据时，未传入此对象，就会以此默认样式为准备），默认值:{alignment: { wrapText: true, vertical: 'middle', horizontal: 'center' }}
       * @param paramsObj.excelPath {String} 生成的excel表格路径
       * @param paramsObj.frameInfo {Object} 表示此表格将在何种框架中使用。如：{ name:"egg.js",filename:"测试表格",other:ctx}
       * @param paramsObj.frameInfo.filename {String} 表示生成的ecel名字
@@ -39,7 +40,7 @@ class ExcelMod {
       * }
     */
   static async getWorkbook(paramsObj) {
-    const { excelPath, excelData, frameInfo, returnCall = false } = paramsObj;
+    const { excelPath, excelData, frameInfo, returnCall = false, cellDefaultStyle } = paramsObj;
     let workbook;
     // 传了表格路径，则表示 表格将生成在本地硬盘
     if (excelPath) {
@@ -66,10 +67,14 @@ class ExcelMod {
       throw new Error('excel配置参数格式错误');
     }
     // 配置默认的表格相关样式
-    const defaultStyle = {
-      alignment: { wrapText: true, vertical: 'middle', horizontal: 'center' },
-      // font: { bold: true },
-    };
+    let defaultStyle;
+    if (!cellDefaultStyle) {
+      defaultStyle = {
+        alignment: { wrapText: true, vertical: 'middle', horizontal: 'center' },
+        // font: { bold: true },
+      };
+    }
+    else defaultStyle = cellDefaultStyle;
     // 循环创建表格里面的各个sheet
     for (let i = 0; i < options.length; i++) {
       const obj = options[i];

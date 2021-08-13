@@ -136,7 +136,7 @@
     ctx.res.end();
 ```
 
-## 4. getWorkbook参数详细说明
+## 5. getWorkbook参数详细说明
 
 ```js
  * @function 生成表格对象的功能函数getWorkbook
@@ -177,9 +177,9 @@
     */
 ```
 
-## 5. 提示
+## 6. 提示
 
    此模块底层调用的exceljs模块，文档：https://github.com/exceljs/exceljs/blob/master/README_zh.md
 
-## 6. 后续
+## 7. 后续
    后续空了会依次添加主流node框架的直接支持，客户端js等导出，代码里面也预留了相关接口。
